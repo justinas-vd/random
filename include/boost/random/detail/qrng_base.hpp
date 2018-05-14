@@ -157,8 +157,11 @@ public:
 
       if (s.dimension() != prevent_zero_dimension(dim))
       {
+        // We can't have lattice and quasi_state of different dimensionality,
+        // so either both resizes succeeed or nothing is changed.
+        state_type new_state(dim);
         s.lattice.resize(dim);
-        s.quasi_state.resize(dim);
+        s.quasi_state.swap(new_state);
       }
       // Fast-forward to the correct state
       s.derived().seed(seed);
